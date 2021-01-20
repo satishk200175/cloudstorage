@@ -107,24 +107,17 @@ class CloudStorageApplicationTests {
 
 		Assertions.assertEquals("Home", driver.getTitle());
 
-		//homePage.getNotesTab();
 
-		driver.findElement(By.xpath("//a[text()='Notes']")).click();
-		driver.manage().timeouts().implicitlyWait(10,TimeUnit.SECONDS) ;
+		//driver.findElement(By.xpath("//a[text()='Notes']")).click();
+		driver.findElement(By.xpath("//*[@id=\"nav-notes-tab\"]")).click();
 
-		//Assertions.assertEquals("File Name", driver.findElement(By.xpath("//*[@id=\"fileTable\"]/thead/tr/th[2]")).getText());
-		//Assertions.assertEquals("Title", driver.findElement(By.xpath("//*[@id=\"userTable\"]/thead/tr/th[2]")).getText());
 		homePage.addNote();
-		driver.manage().timeouts().implicitlyWait(14,TimeUnit.SECONDS) ;
 
 		homePage.submitNote("title1", "description 1");
-		driver.manage().timeouts().implicitlyWait(4,TimeUnit.SECONDS) ;
+
 		Assertions.assertEquals("title1", driver.findElement(By.xpath("//*[@id=\"userTable\"]/tbody/tr/th/span")).getText());
-		System.out.println("Found title1");
-		driver.manage().timeouts().implicitlyWait(4,TimeUnit.SECONDS) ;
 
 		Assertions.assertEquals("description 1", driver.findElement(By.xpath("//*[@id=\"userTable\"]/tbody/tr/td[2]/span")).getText());
-		driver.manage().timeouts().implicitlyWait(4,TimeUnit.SECONDS) ;
 
 	}
 
