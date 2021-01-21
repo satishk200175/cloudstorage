@@ -111,7 +111,7 @@ class CloudStorageApplicationTests {
 		//driver.findElement(By.xpath("//a[text()='Notes']")).click();
 		driver.findElement(By.xpath("//*[@id=\"nav-notes-tab\"]")).click();
 
-		homePage.addNote();
+		//homePage.addNote();
 
 		homePage.submitNote("title1", "description 1");
 
