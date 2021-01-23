@@ -40,20 +40,35 @@ public class CredentialController {
         User user = userService.getUser(authentication.getName());
         if(credentialId == null || credentialId.toString().length()==0){
             Credential credential = new Credential(null, url, userName, null, password, user.getUserId());
-            credentialService.saveCredential(credential);
+            int ret = credentialService.saveCredential(credential);
+            if(ret==1){
+                attributes.addAttribute("successMessage", "Credential added successfully");
+            } else {
+                attributes.addAttribute("errorMessage", "Error adding Credential");
+            }
         } else {
             Credential credential = new Credential(credentialId, url, userName, null, password, user.getUserId());
-            credentialService.updateCredential(credential);
+            int ret = credentialService.updateCredential(credential);
+            if(ret==1){
+                attributes.addAttribute("successMessage", "Credential added successfully");
+            } else {
+                attributes.addAttribute("errorMessage", "Error adding Credential");
+            }
         }
 
-        return new ModelAndView("forward:/home", attributes);
+        return new ModelAndView("redirect:/home", attributes);
     }
 
     @GetMapping("/deletecred")
     public ModelAndView deleteCredential(@RequestParam("credentialId")Integer credentialId, ModelMap attributes, Authentication authentication){
 
         User user = userService.getUser(authentication.getName());
-        credentialService.deleteCredential(credentialId, user.getUserId());
-        return new ModelAndView("forward:/home", attributes);
+        int ret = credentialService.deleteCredential(credentialId, user.getUserId());
+        if(ret==1){
+            attributes.addAttribute("successMessage", "Credential deleted successfully");
+        } else {
+            attributes.addAttribute("errorMessage", "Error deleting Credential");
+        }
+        return new ModelAndView("redirect:/home", attributes);
     }
 }

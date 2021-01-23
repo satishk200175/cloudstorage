@@ -38,22 +38,37 @@ public class NotesController {
         User user = userService.getUser(authentication.getName());
         if(noteId == null || noteId.toString().length()==0){
             Note note = new Note(null, noteTitle, noteDesc, user.getUserId());
-            noteService.saveNote(note);
+            int ret = noteService.saveNote(note);
+            if(ret==1){
+                attributes.addAttribute("successMessage", "Note added successfully");
+            } else {
+                attributes.addAttribute("errorMessage", "Error adding Note");
+            }
         } else {
             System.out.println("Note ID: "+noteId);
             Note note = new Note(noteId, noteTitle, noteDesc, user.getUserId());
-            noteService.updateNote(note);
+            int ret = noteService.updateNote(note);
+            if(ret==1){
+                attributes.addAttribute("successMessage", "Note updated successfully");
+            } else {
+                attributes.addAttribute("errorMessage", "Error updating Note");
+            }
         }
 
-        return new ModelAndView("forward:/home", attributes);
+        return new ModelAndView("redirect:/home", attributes);
     }
 
     @GetMapping("/deletenote")
     public ModelAndView deleteNote(@RequestParam("noteId")Integer noteId, ModelMap attributes, Authentication authentication){
 
         User user = userService.getUser(authentication.getName());
-        noteService.deleteNote(user.getUserId(), noteId);
-        return new ModelAndView("forward:/home", attributes);
+        int ret = noteService.deleteNote(user.getUserId(), noteId);
+        if(ret==1){
+            attributes.addAttribute("successMessage", "Note deleted successfully");
+        } else {
+            attributes.addAttribute("errorMessage", "Error deleting Note");
+        }
+        return new ModelAndView("redirect:/home", attributes);
     }
 
 }

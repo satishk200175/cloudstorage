@@ -20,5 +20,5 @@ public interface FileMapper {
     List<CloudFile> getAllFiles(Integer userId);
 
     @Delete("DELETE FROM FILES WHERE userid=#{userId} AND filename=#{fileName}")
-    void deleteFile(Integer userId, String fileName);
+    int deleteFile(Integer userId, String fileName);
 }

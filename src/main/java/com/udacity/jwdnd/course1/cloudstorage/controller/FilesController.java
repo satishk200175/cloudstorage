@@ -42,22 +42,33 @@ public class FilesController {
         User user = userService.getUser(authentication.getName());
 
         if(file.isEmpty()){
-            attributes.addAttribute("uploadError", "Please select a file to upload.");
+            attributes.addAttribute("errorMessage", "Please select a file to upload.");
         } else if(fileService.readFile(user.getUserId(), file.getOriginalFilename())!=null) {
-            attributes.addAttribute("uploadError", "Uploaded file already exists. Please upload another file");
+            attributes.addAttribute("errorMessage", "Uploaded file already exists. Please upload another file");
         } else{
             CloudFile cloudFile = new CloudFile(null, file.getOriginalFilename(), file.getContentType(), file.getSize(), user.getUserId(), file.getBytes());
-            fileService.saveFile(cloudFile);
+            int ret = fileService.saveFile(cloudFile);
+            if(ret==1){
+                attributes.addAttribute("successMessage", "File uploaded successfully");
+            } else {
+                attributes.addAttribute("errorMessage", "Error while uploading, please try again later.");
+            }
+
         }
-        return new ModelAndView("forward:/home", attributes);
+        return new ModelAndView("redirect:/home", attributes);
     }
 
     @GetMapping("/delete")
     public ModelAndView fileDelete(@RequestParam("fileName")String fileName, ModelMap attributes, Authentication authentication){
 
         User user = userService.getUser(authentication.getName());
-        fileService.deleteFile(user.getUserId(), fileName);
-        return new ModelAndView("forward:/home", attributes);
+        int ret = fileService.deleteFile(user.getUserId(), fileName);
+        if(ret==1){
+            attributes.addAttribute("successMessage", "File deleted successfully");
+        } else {
+            attributes.addAttribute("errorMessage", "Error deleting File");
+        }
+        return new ModelAndView("redirect:/home", attributes);
     }
 
     @GetMapping("/download")

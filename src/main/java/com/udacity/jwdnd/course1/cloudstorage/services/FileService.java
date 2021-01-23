@@ -26,7 +26,7 @@ public class FileService {
         return fileMapper.getAllFiles(userId);
     }
 
-    public void deleteFile(Integer userId, String fileName) {
-        fileMapper.deleteFile(userId, fileName);
+    public int deleteFile(Integer userId, String fileName) {
+        return fileMapper.deleteFile(userId, fileName);
     }
 }

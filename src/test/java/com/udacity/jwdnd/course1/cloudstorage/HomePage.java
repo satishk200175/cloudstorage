@@ -84,16 +84,23 @@ public class HomePage {
     }
 
     public void viewCredential(){
+        delayLoad(DELAY_TIME);
+        credentialsTab.click();
+        delayLoad(DELAY_TIME);
         editCredButton.click();
         delayLoad(DELAY_TIME);
     }
 
     public void closeCredModelView(){
+
+
         closeCredModelView.click();
         delayLoad(DELAY_TIME);
     }
 
     public void deleteCredential(){
+        delayLoad(DELAY_TIME);
+        credentialsTab.click();
         delayLoad(DELAY_TIME);
         deleteCredButton.click();
         delayLoad(DELAY_TIME);
@@ -108,23 +115,29 @@ public class HomePage {
     }
 
     public void getNotesTab(){
+        delayLoad(DELAY_TIME);
         notesTab.click();
+        delayLoad(DELAY_TIME);
     }
 
     public void addNote(){
-
+        delayLoad(DELAY_TIME);
         addNoteButton.click();
+        delayLoad(DELAY_TIME);
     }
 
     public void submitNote(String title, String description){
 
+        delayLoad(DELAY_TIME);
+        addNote();
         inputNoteDescription.sendKeys(description);
         inputNoteTitle.sendKeys(title);
         noteSubmitButton.click();
+        delayLoad(DELAY_TIME);
     }
 
     public void editNote(String title, String description){
-        delayLoad(DELAY_TIME);
+        getNotesTab();
         editNoteButton.click();
         delayLoad(DELAY_TIME);
         inputNoteTitle.clear();

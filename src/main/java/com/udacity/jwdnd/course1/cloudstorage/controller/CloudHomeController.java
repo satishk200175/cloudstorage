@@ -9,10 +9,7 @@ import com.udacity.jwdnd.course1.cloudstorage.services.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,8 +31,10 @@ public class CloudHomeController {
     }
 
     @GetMapping()
-    public String cloudHomeView(Authentication authentication, Model model){
+    public String cloudHomeView(@ModelAttribute("errorMessage") String error, @ModelAttribute("successMessage") String message, Authentication authentication, Model model){
         User user = userService.getUser(authentication.getName());
+        model.addAttribute("successMessage", message);
+        model.addAttribute("errorMessage", error);
         model.addAttribute("fileList", fileService.listFiles(user.getUserId()));
         model.addAttribute("noteList", noteService.listNotes(user.getUserId()));
         model.addAttribute("credList", credentialService.getAllCredentials(user.getUserId()));

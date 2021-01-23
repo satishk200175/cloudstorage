@@ -23,6 +23,6 @@ public interface NotesMapper {
     List<Note> getAllNotes(Integer userId);
 
     @Delete("DELETE FROM NOTES WHERE userid=#{userId} AND noteid=#{noteId}")
-    void deleteNote(Integer userId, Integer noteId);
+    int deleteNote(Integer userId, Integer noteId);
 
 }
